@@ -30,29 +30,37 @@ class player():
 
 		return(self.x, self.y)
 
-class tile():
-	"""docstring for tile"""
-	def __init__(self, tile):
-		self.tile = tile
-	def draw(surface, x, y):
-		surface.blit(self.tile, (self.x,self.y))
-	#include tile properties
+# class tile():
+# 	"""docstring for tile"""
+# 	def __init__(self, tile):
+# 		self.tile = tile
+# 	def draw(surface, x, y):
+# 		surface.blit(self.tile, (self.x,self.y))
+# 	#include tile properties
 
 
 class level():
 	"""docstring for level"""
-	def __init__(self, level_matrix):
+	def __init__(self, level_matrix, tile, tileX, tileY):
 		self.level_matrix = level_matrix
+		self.tile = tile
+		self.tileX = tileX
+		self.tileY = tileY
+
+	def draw(self, tileX, tileY):
+		screen.blit(self.tile, (tileX,tileY))
+	#include tile properties
+
 	def render_level(self):
 		tileX = 0
 		tileY = 0
-		basic_tile = tile(mytile)
 
 		for row in self.level_matrix:
 			for item in row:
 				print (item)
-				basic_tile(screen, tileX, tileY)
+				self.draw(tileX, tileY)
 				tileX+=50
+			tileX = 0
 			tileY+=50
 
 
@@ -90,8 +98,7 @@ bob.draw(screen)
 
 
 
-level_one = level(one) #level
-level_one.render_level()
+level_one = level(one, mytile,0,0) #level
 
 
 
@@ -101,7 +108,10 @@ while not done:
 		if event.type == pygame.QUIT:
 			done = True
 
-	screen.fill((0,0,255))
+
+	level_one.render_level()
+
+	#screen.fill((0,0,255))
 	temp_coor = bob.move()
 	bob=player(myimage,temp_coor[0],temp_coor[1])
 	bob.draw(screen)
