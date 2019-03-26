@@ -1,26 +1,3 @@
-one =[[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
-		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]]
-
-
-import pygame
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-
-done = False
-
-myimage = pygame.image.load("myimage.png")
-mytile = pygame.image.load("tile.png")
-
 class player():
 	"""docstring for player"""
 	def __init__(self, image, x, y):
@@ -62,9 +39,6 @@ class tile():
 	#include tile properties
 
 
-
-
-
 class level():
 	"""docstring for level"""
 	def __init__(self, level_matrix):
@@ -81,14 +55,46 @@ class level():
 				tileX+=50
 			tileY+=50
 
+
+"""This is where my program starts """
+import pygame
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+done = False
+
+
+
+one =  [[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0],
+		[0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1]]
+
+
+
+myimage = pygame.image.load("myimage.png")
+mytile = pygame.image.load("tile.png")
 		
 
-bob=player(myimage,30,9)
+
+bob=player(myimage,30,9) #player
 bob.draw(screen)
 
 
-level_one = level(one)
+
+
+level_one = level(one) #level
 level_one.render_level()
+
+
+
 
 while not done:
 	for event in pygame.event.get():
