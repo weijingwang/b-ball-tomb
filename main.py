@@ -57,7 +57,7 @@ class level():
 
 		for row in self.level_matrix:
 			for item in row:
-				print (item)
+				# print (item)
 				self.draw(tileX, tileY)
 				tileX+=50
 			tileX = 0
