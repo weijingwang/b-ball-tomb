@@ -6,7 +6,7 @@ class player():
 		self.y = y
 		self.dx = 0
 		self.dy = 0
-		self.rect = pygame.Rect(self.x, self.y, 49, 49)
+		self.rect = pygame.Rect(self.x, self.y, 20, 20)
 		self.tileBoxes = tileBoxes
 	def draw(self, surface):
 		player = surface.blit(self.image, (self.x,self.y))
@@ -14,6 +14,7 @@ class player():
 		return self.rect
 
 	def move(self):
+		next_level = False
 		pressed = pygame.key.get_pressed()
 		self.draw(screen)
 		if pressed[pygame.K_LEFT]:
@@ -39,31 +40,31 @@ class player():
 
 		if self.rect.colliderect(self.tileBoxes[1]):
 			print("out")
-			return "done"
+			next_level = True
 
 		for wall in self.tileBoxes[0]:
 			if self.rect.colliderect(wall):
 				if self.dx > 0:
-					self.rect.right = wall.left
+					# self.rect.right = wall.left
 					print("left")
-					self.x = wall[0]+100
+					self.x = wall[0]-50
 				elif self.dx < 0:
-					self.rect.left = wall.right
+					# self.rect.left = wall.right
 					print("r")
 					self.x = wall[0]+50
 				elif self.dy > 0:
-					self.rect.bottom = wall.top
+					# self.rect.bottom = wall.top
 					print("t")
 					self.y = wall[1]-50
 				elif self.dy < 0:
-					self.rect.top = wall.bottom
+					# self.rect.top = wall.bottom
 					print("b")
 					self.y = wall[1]+50
 					
 
 		# elif playerRect.colliderect(otherRect) == True:
 		# 	print("eargsthd")
-		return(self.x, self.y)
+		return(self.x, self.y, next_level)
 
 
 
@@ -123,8 +124,9 @@ class level():
 					endTile = self.draw(self.tileX, self.tileY, tile[2],False)
 				elif item == 3:
 					hi=self.draw(self.tileX, self.tileY, tile[3],False)
+				elif item == 4:
+					hi=self.draw(self.tileX, self.tileY, tile[4],True)
 					
-
 				
 				# print(hi)
 				self.tileX+=50
@@ -140,15 +142,28 @@ class level():
 import pygame
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
-done = False
 
 
-#one = [[0,1],[2,3]]
 
+#level
+"""
+default =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+"""
 one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
+		[1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,1,1,1,0,0,0,0,0,0,1],
 		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
@@ -158,52 +173,66 @@ one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3]]
 
+two =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+		[1,0,0,0,0,0,3,3,3,3,3,0,0,1,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1,1,1,3,1],
+		[1,1,1,0,0,1,1,1,1,1,1,1,3,3,0,1],
+		[1,0,1,0,0,0,0,0,0,0,0,0,3,2,0,1],
+		[1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
+		[1,0,0,0,0,0,3,3,3,0,0,0,0,0,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
 
+
+
+#image
 myimage = pygame.image.load("b-ball.png")
 door_tile = pygame.image.load("tile.png") #door
 tile_tile =pygame.image.load("tile1.png") #tile
 wall_tile =pygame.image.load("tile2.png") #wall	
 light_tile =pygame.image.load("tile3.png") #light	
+baller_tile =pygame.image.load("tile4.png") #light	
+
+
+tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
+
+
+def game(level_matrix):
+	done = False
+	#level
+	level_one = level(level_matrix, tiles,0,0) #level
 
 
 
-tiles = (tile_tile, wall_tile, door_tile, light_tile)
-
-
-level_one = level(one, tiles,0,0) #level
-
-
-
-x_collide = False
-y_collide = False
-tileBox = level_one.render_level(tiles)
-bob=player(myimage,50,50,tileBox) #player
-bob.draw(screen)
-
-while not done:
-	for event in pygame.event.get():
-		if event.type == pygame.QUIT:
-			done = True
-
+	x_collide = False
+	y_collide = False
 	tileBox = level_one.render_level(tiles)
-
-
-	# level_one.render_level(tiles)
-
-	#screen.fill((0,0,255))
-	temp_coor = bob.move()
-	playerBox = bob.draw(screen)
-	
-
-
-
-
-
-	tile_temp_coor = level_one.render_level(tiles)
-
-	bob=player(myimage,temp_coor[0],temp_coor[1],tileBox)
+	bob=player(myimage,50,50,tileBox) #player
 	bob.draw(screen)
 
+	while not done:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				done = True
 
-	pygame.display.flip()
+		tileBox = level_one.render_level(tiles)
+
+		temp_coor = bob.move()
+		playerBox = bob.draw(screen)
+		
+		tile_temp_coor = level_one.render_level(tiles)
+
+		bob=player(myimage,temp_coor[0],temp_coor[1],tileBox)
+		bob.draw(screen)
+
+		if temp_coor[2] == True:
+			return True
+		pygame.display.flip()	
+
+if game(one) == True:
+	if game(two) == True:
+		quit()	
