@@ -8,6 +8,7 @@ class player():
 	def draw(self, surface):
 		player = surface.blit(self.image, (self.x,self.y))
 		playerRect = pygame.Rect(self.x, self.y, 49, 49)
+		return playerRect
 
 	def move(self):
 		pressed = pygame.key.get_pressed()
@@ -62,33 +63,36 @@ class level():
 
 		screen.blit(tile, (tileX,tileY))
 	#include tile properties
-		tileRect = pygame.Rect(self.tileX, self.tileY, 50, 50)
+		tileRect = pygame.Rect(tileX, tileY, 50, 50)
+		return tileRect
 
 	def render_level(self,tile):
-		tileX = 0
-		tileY = 0
+		self.tileX = 0
+		self.tileY = 0
 
-		tile_coordsX = []
-		tile_coordsY = []
+		tileRect_list = []
 
 		for row in self.level_matrix:
 			for item in row:
-				# print (item)
+				# print (item)`
 				if item == 0:
-					self.draw(tileX, tileY, tile[0])
+					hi=self.draw(self.tileX, self.tileY, tile[0])
 				elif item == 1:
-					self.draw(tileX, tileY, tile[1])
+					hi=self.draw(self.tileX, self.tileY, tile[1])
 				elif item == 2:
-					self.draw(tileX, tileY, tile[2])
+					hi=self.draw(self.tileX, self.tileY, tile[2])
 				elif item == 3:
-					self.draw(tileX, tileY, tile[3])
+					hi=self.draw(self.tileX, self.tileY, tile[3])
 
-				tile_coordsX.append(tileX)
+				tileRect_list.append(hi)
+				# print(hi)
+				self.tileX+=50
 
-				tileX+=50
-			tileX = 0
-			tile_coordsY.append(tileY)
-			tileY+=50
+			self.tileX = 0
+			self.tileY+=50
+			# print("good")
+			
+		return tileRect_list
 
 
 """This is where my program starts """
@@ -98,8 +102,9 @@ screen = pygame.display.set_mode((800, 600))
 done = False
 
 
+#one = [[0,1],[2,3]]
 
-one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+one =  [[0,1,2,3,0,1,2,3,1,1,0,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
@@ -134,20 +139,32 @@ level_one = level(one, tiles,0,0) #level
 x_collide = False
 y_collide = False
 
+i = 0
 
 while not done:
 	for event in pygame.event.get():
 		if event.type == pygame.QUIT:
 			done = True
 
-	level_one.render_level(tiles)
+	# level_one.render_level(tiles)
 
 	#screen.fill((0,0,255))
 	temp_coor = bob.move()
+	playerBox = bob.draw(screen)
+	tileBox = level_one.render_level(tiles)
+
+	for box in tileBox:
+		if playerBox.colliderect(box):
+			# print("asdf")
+			pass
 	# tile_temp_coor = level_one.render_level(tiles)
 
 	bob=player(myimage,temp_coor[0],temp_coor[1])
 	bob.draw(screen)
+
+	# i+=1
+	# if (i == 5):
+	# 	break
 
 	# for x in tile_temp_coor[0]:
 	# 	if temp_coor[0] == tile_temp_coor[0]:
