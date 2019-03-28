@@ -1,20 +1,23 @@
 class player():
 	"""docstring for player"""
-	def __init__(self, image, x, y,tileBoxes):
+	def __init__(self, image, x, y,tileBoxes,chestBoxes,next_level,gotChest):
 		self.image = image
 		self.x = x
 		self.y = y
 		self.dx = 0
 		self.dy = 0
-		self.rect = pygame.Rect(self.x, self.y, 40, 40)
+		self.rect = pygame.Rect(self.x, self.y, 50, 50)
 		self.tileBoxes = tileBoxes
+		self.chestBoxes = chestBoxes
+		self.next_level = next_level
+		self.gotChest = gotChest
+
 	def draw(self, surface):
 		player = surface.blit(self.image, (self.x,self.y))
 		
 		return self.rect
 
 	def move(self):
-		next_level = False
 		pressed = pygame.key.get_pressed()
 		self.draw(screen)
 		if pressed[pygame.K_LEFT]:
@@ -40,7 +43,7 @@ class player():
 
 		if self.rect.colliderect(self.tileBoxes[1]):
 			print("out")
-			next_level = True
+			self.next_level = True #----------------------------------------------------------------------------------
 
 		for wall in self.tileBoxes[0]:
 			if self.rect.colliderect(wall):
@@ -60,11 +63,22 @@ class player():
 					# self.rect.top = wall.bottom
 					print("careful, you could poke an eye out!b")
 					self.y = wall[1]+50
-					
+
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				quit()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_SPACE:
+					if self.rect.colliderect(self.chestBoxes[2]):
+						print("look out a chest omg! press space to open!")
+						self.gotChest = True #----------------------------------------------------------------------------------
+
+	
+		# print(self.gotChest)		
 
 		# elif playerRect.colliderect(otherRect) == True:
 		# 	print("eargsthd")
-		return(self.x, self.y, next_level)
+		return(self.x, self.y, self.next_level, self.gotChest)
 
 
 
@@ -86,16 +100,28 @@ class player():
 
 class present(): #stuff in the chest and when you open it, you get this and it will show in a bar
 	"""docstring for present"""
-	def __init__(self, my_id, size):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
-		super(present, self).__init__() # SIZE if fullscreen, press space to make gone...
+	def __init__(self, full_size, small_size,size_is_normal,my_id,x,y):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
+# SIZE if fullscreen, press enter to make gone...
+		self.full_size = full_size
+		self.small_size = small_size
+		self.size_is_normal = size_is_normal
 		self.my_id = my_id
-		self.size = size
 		self.x = x
 		self. y = y
-	def function():
-		pass
-
 		
+
+	def show(self):
+		done = False
+		while not done:
+			for event in pygame.event.get():
+				if event.type == pygame.KEYDOWN:
+					if event.key == pygame.K_RETURN:
+						self.size_is_normal = False
+			if self.size_is_normal == True:
+				screen.blit(self.full_size[self.my_id], (self.x,self.y))
+			else:
+				screen.blit(self.small_size[self.my_id], (self.x,self.y))
+
 
 		
 
@@ -123,7 +149,7 @@ class level():
 		self.tileY = 0
 
 		tileRect_list = []
-
+		chestRect_list = []
 		for row in self.level_matrix:
 			for item in row:
 				# print (item)`
@@ -139,8 +165,10 @@ class level():
 				elif item == 3:
 					hi=self.draw(self.tileX, self.tileY, tile[3],False)
 				elif item == 4:
-					hi=self.draw(self.tileX, self.tileY, tile[4],True)
-					tileRect_list.append(hi)
+					hi=self.draw(self.tileX, self.tileY, tile[4],False)
+					chest =self.draw(self.tileX, self.tileY, tile[4],False)
+					# tileRect_list.append(hi)
+					chestRect_list.append(chest)
 					
 				
 				# print(hi)
@@ -150,7 +178,7 @@ class level():
 			self.tileY+=50
 			# print("good")
 			
-		return tileRect_list ,endTile
+		return tileRect_list ,endTile, chest
 
 
 
@@ -271,16 +299,26 @@ light_tile =pygame.image.load(getPath("assets/tile3.png")) #light
 baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light	
 #presents
 present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
+present1_s = pygame.transform.scale(present1, (50,50))
 present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
+present2_s = pygame.transform.scale(present2, (50,50))
 present3 = pygame.image.load(getPath("assets/present3.png")) # b-ball bone
+present3_s = pygame.transform.scale(present3, (50,50))
 present4 = pygame.image.load(getPath("assets/present4.png")) # slam dunk REDO?
+present4_s = pygame.transform.scale(present4, (50,50))
 present5 = pygame.image.load(getPath("assets/present5.png")) # JOIN THE PACK
+present5_s = pygame.transform.scale(present5, (50,50))
 present6 = pygame.image.load(getPath("assets/present6.png")) #summon
-tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
+present6_s = pygame.transform.scale(present6, (50,50))
 
+
+tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
+presents = (present1,present2,present3,present4,present5,present6)
+presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 
 def game(level_matrix, x, y):
 	done = False
+
 	#level
 	level_one = level(level_matrix, tiles,0,0) #level
 
@@ -289,26 +327,35 @@ def game(level_matrix, x, y):
 	x_collide = False
 	y_collide = False
 	tileBox = level_one.render_level(tiles)
-	bob=player(myimage,x,y,tileBox) #player
+
+	bob=player(myimage,x,y,tileBox,tileBox, False, False) #player
 	bob.draw(screen)
 
 	while not done:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
 				quit()
+			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
+				if event.key == pygame.K_r:
+					bob.x = 50
+					bob.y = 50
 
 		tileBox = level_one.render_level(tiles)
 
 		temp_coor = bob.move()
 		playerBox = bob.draw(screen)
+		next_level = bob.next_level
+		gotChest = bob.gotChest
 		
+
+
 		tile_temp_coor = level_one.render_level(tiles)
 
-		bob=player(myimage,temp_coor[0],temp_coor[1],tileBox)
+		bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
 		bob.draw(screen)
 
 		if temp_coor[2] == True:
-			return True
+			return (True,temp_coor[3]) #next level and if you got chest or not
 			done = True
 		pygame.display.flip()	
 
@@ -322,12 +369,21 @@ def game(level_matrix, x, y):
 
 
 
-
+my_present = present(presents, presents_s,True,0,0,0)
 while True:
-	if game(one,50,50) == True:
-		if game(two,50,50) == True:
-			if game(thr,150,250) == True:
-				if game(fou,350,100) == True:
-					if game(fiv,650,100) == True:
-						if game(six,550,450) == True:
+	if game(one,50,50)[0] == True:
+		my_present.show()
+		if game(two,50,50)[0] == True:
+			if game(thr,150,250)[0] == True:
+				if game(fou,350,100)[0] == True:
+					if game(fiv,650,100)[0] == True:
+						if game(six,550,450)[0] == True:
 							continue
+	if game(one,50,50)[1] == True:
+		print("yes")
+		if game(two,50,50)[1] == True:
+			if game(thr,150,250)[1] == True:
+				if game(fou,350,100)[1] == True:
+					if game(fiv,650,100)[1] == True:
+						if game(six,550,450)[1] == True:
+							quit()
