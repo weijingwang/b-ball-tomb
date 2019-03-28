@@ -273,10 +273,29 @@ present5_s = pygame.transform.scale(present5, (50,50))
 present6 = pygame.image.load(getPath("assets/present6.png")) #summon
 present6_s = pygame.transform.scale(present6, (50,50))
 
+title = pygame.image.load(getPath("assets/title.png"))
 
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 presents = (present1,present2,present3,present4,present5,present6)
 presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
+
+
+def title_screen():
+	done = False
+
+	while not done:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				done = True
+			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
+				if event.key == pygame.K_SPACE:
+					done = True
+
+		screen.blit(title, (0,0))
+
+		pygame.display.flip()	
+
+
 
 def game(level_matrix, x, y):
 	done = False
@@ -329,9 +348,11 @@ def game(level_matrix, x, y):
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 my_present = present(presents, presents_s,True,0,0,0)
+title_screen()
 while True:
+
+#do all seperate screens no if statement as much???
 	if game(one,50,50)[0] == True:
-		my_present.show()
 		if game(two,50,50)[0] == True:
 			if game(thr,150,250)[0] == True:
 				if game(fou,350,100)[0] == True:
