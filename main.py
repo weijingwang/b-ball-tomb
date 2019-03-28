@@ -74,28 +74,8 @@ class player():
 						self.gotChest = True #----------------------------------------------------------------------------------
 
 	
-		# print(self.gotChest)		
-
-		# elif playerRect.colliderect(otherRect) == True:
-		# 	print("eargsthd")
 		return(self.x, self.y, self.next_level, self.gotChest)
 
-
-
-# class tile():
-# 	"""docstring for tile"""
-# 	def __init__(self, tile):
-# 		self.tile = tile
-# 	def draw(surface, x, y):
-# 		surface.blit(self.tile, (self.x,self.y))
-# 	#include tile properties
-
-# class tile():
-# 	"""docstring for tile"""
-# 	def __init__(self, type):
-# 		self.type = type
-# 	def draw(type):
-# 		if type == 0:
 
 
 class present(): #stuff in the chest and when you open it, you get this and it will show in a bar
@@ -170,7 +150,6 @@ class level():
 					# tileRect_list.append(hi)
 					chestRect_list.append(chest)
 					
-				
 				# print(hi)
 				self.tileX+=50
 
@@ -188,23 +167,6 @@ import os
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
-
-
-#level
-"""
-default =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-"""
 one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1],
@@ -364,10 +326,7 @@ def game(level_matrix, x, y):
 
 
 
-
-
-
-
+#!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 my_present = present(presents, presents_s,True,0,0,0)
 while True:
