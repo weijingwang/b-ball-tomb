@@ -6,7 +6,7 @@ class player():
 		self.y = y
 		self.dx = 0
 		self.dy = 0
-		self.rect = pygame.Rect(self.x, self.y, 20, 20)
+		self.rect = pygame.Rect(self.x, self.y, 40, 40)
 		self.tileBoxes = tileBoxes
 	def draw(self, surface):
 		player = surface.blit(self.image, (self.x,self.y))
@@ -46,19 +46,19 @@ class player():
 			if self.rect.colliderect(wall):
 				if self.dx > 0:
 					# self.rect.right = wall.left
-					print("left")
+					print("careful, you could poke an eye out!left")
 					self.x = wall[0]-50
 				elif self.dx < 0:
 					# self.rect.left = wall.right
-					print("r")
+					print("careful, you could poke an eye out!r")
 					self.x = wall[0]+50
 				elif self.dy > 0:
 					# self.rect.bottom = wall.top
-					print("t")
+					print("careful, you could poke an eye out!t")
 					self.y = wall[1]-50
 				elif self.dy < 0:
 					# self.rect.top = wall.bottom
-					print("b")
+					print("careful, you could poke an eye out!b")
 					self.y = wall[1]+50
 					
 
@@ -82,6 +82,20 @@ class player():
 # 		self.type = type
 # 	def draw(type):
 # 		if type == 0:
+
+
+class present(): #stuff in the chest and when you open it, you get this and it will show in a bar
+	"""docstring for present"""
+	def __init__(self, my_id, size):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
+		super(present, self).__init__() # SIZE if fullscreen, press space to make gone...
+		self.my_id = my_id
+		self.size = size
+		self.x = x
+		self. y = y
+	def function():
+		pass
+
+		
 
 		
 
@@ -126,6 +140,7 @@ class level():
 					hi=self.draw(self.tileX, self.tileY, tile[3],False)
 				elif item == 4:
 					hi=self.draw(self.tileX, self.tileY, tile[4],True)
+					tileRect_list.append(hi)
 					
 				
 				# print(hi)
@@ -138,8 +153,10 @@ class level():
 		return tileRect_list ,endTile
 
 
+
 """This is where my program starts """
 import pygame
+import os
 pygame.init()
 screen = pygame.display.set_mode((800, 600))
 
@@ -176,7 +193,7 @@ one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 two =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,1,1,1,1,1,1,1,1,1,0,0,0,1,1,1],
+		[1,3,0,0,0,4,0,0,1,1,0,0,0,1,1,1],
 		[1,0,0,0,0,0,3,3,3,3,3,0,0,1,0,1],
 		[1,0,0,0,0,0,0,0,0,0,0,1,1,1,3,1],
 		[1,1,1,0,0,1,1,1,1,1,1,1,3,3,0,1],
@@ -186,22 +203,83 @@ two =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,3,3,3,0,0,0,0,0,1,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
+thr =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,0,0,1,3,0,0,0,1],
+		[1,0,0,3,0,0,3,4,3,0,1,3,0,0,0,1],
+		[1,0,0,0,0,0,0,3,0,0,1,3,0,2,0,1],
+		[1,0,0,0,0,0,0,0,0,0,1,3,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,1,1,1,0,0,0,0,1,0,1,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
+fou =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,1,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,0,0,0,1,0,3,4,0,3,0,1,0,2,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+fiv =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1],
+		[1,0,4,0,0,0,0,0,0,1,1,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1],
+		[1,0,0,0,0,0,1,1,1,0,0,0,0,0,3,1],
+		[1,0,0,0,0,0,1,0,0,0,0,0,0,3,3,1],
+		[1,0,0,0,0,0,3,0,0,0,0,0,3,3,0,1],
+		[1,0,0,0,0,0,3,0,0,0,0,3,3,0,0,1],
+		[1,0,0,0,0,0,1,1,1,3,3,3,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,2,0,0,0,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+six =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,4,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
 
 #image
-myimage = pygame.image.load("b-ball.png")
-door_tile = pygame.image.load("tile.png") #door
-tile_tile =pygame.image.load("tile1.png") #tile
-wall_tile =pygame.image.load("tile2.png") #wall	
-light_tile =pygame.image.load("tile3.png") #light	
-baller_tile =pygame.image.load("tile4.png") #light	
 
+def getPath(path):
+	the_path = os.path.abspath(path)
+	return the_path
 
+#player, tile
+myimage = pygame.image.load(getPath("assets/b-ball.png"))
+door_tile = pygame.image.load(getPath("assets/tile.png")) #door
+tile_tile =pygame.image.load(getPath("assets/tile1.png")) #tile
+wall_tile =pygame.image.load(getPath("assets/tile2.png")) #wall	
+light_tile =pygame.image.load(getPath("assets/tile3.png")) #light	
+baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light	
+#presents
+present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
+present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
+# present3 = pygame.image.load(getPath("assets/"))
+# present4 = pygame.image.load(getPath("assets/"))
+# present5 = pygame.image.load(getPath("assets/"))
+# present6 = pygame.image.load(getPath("assets/"))
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 
 
-def game(level_matrix):
+def game(level_matrix, x, y):
 	done = False
 	#level
 	level_one = level(level_matrix, tiles,0,0) #level
@@ -211,13 +289,13 @@ def game(level_matrix):
 	x_collide = False
 	y_collide = False
 	tileBox = level_one.render_level(tiles)
-	bob=player(myimage,50,50,tileBox) #player
+	bob=player(myimage,x,y,tileBox) #player
 	bob.draw(screen)
 
 	while not done:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
-				done = True
+				quit()
 
 		tileBox = level_one.render_level(tiles)
 
@@ -231,8 +309,25 @@ def game(level_matrix):
 
 		if temp_coor[2] == True:
 			return True
+			done = True
 		pygame.display.flip()	
 
-if game(one) == True:
-	if game(two) == True:
-		quit()	
+	
+
+
+
+
+
+
+
+
+
+
+while True:
+	if game(one,50,50) == True:
+		if game(two,50,50) == True:
+			if game(thr,150,250) == True:
+				if game(fou,350,100) == True:
+					if game(fiv,650,100) == True:
+						if game(six,550,450) == True:
+							continue
