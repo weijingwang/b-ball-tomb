@@ -272,10 +272,10 @@ baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light
 #presents
 present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
 present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
-# present3 = pygame.image.load(getPath("assets/"))
-# present4 = pygame.image.load(getPath("assets/"))
-# present5 = pygame.image.load(getPath("assets/"))
-# present6 = pygame.image.load(getPath("assets/"))
+present3 = pygame.image.load(getPath("assets/present3.png")) # b-ball bone
+# present4 = pygame.image.load(getPath("assets/present4"))
+# present5 = pygame.image.load(getPath("assets/present5"))
+# present6 = pygame.image.load(getPath("assets/present6"))
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 
 
