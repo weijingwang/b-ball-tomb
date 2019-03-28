@@ -273,9 +273,9 @@ baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light
 present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
 present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
 present3 = pygame.image.load(getPath("assets/present3.png")) # b-ball bone
-# present4 = pygame.image.load(getPath("assets/present4"))
-# present5 = pygame.image.load(getPath("assets/present5"))
-# present6 = pygame.image.load(getPath("assets/present6"))
+present4 = pygame.image.load(getPath("assets/present4.png")) # slam dunk REDO?
+present5 = pygame.image.load(getPath("assets/present5.png")) # JOIN THE PACK
+present6 = pygame.image.load(getPath("assets/present6.png")) #summon
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 
 
