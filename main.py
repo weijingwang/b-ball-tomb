@@ -297,7 +297,7 @@ def title_screen():
 
 
 
-def game(level_matrix, x, y):
+def game(level_matrix, x, y,number):
 	done = False
 
 	#level
@@ -311,6 +311,8 @@ def game(level_matrix, x, y):
 
 	bob=player(myimage,x,y,tileBox,tileBox, False, False) #player
 	bob.draw(screen)
+
+	my_present = present(True, presents_s,presents,int(number)-1,0,0)
 
 	while not done:
 		for event in pygame.event.get():
@@ -329,15 +331,14 @@ def game(level_matrix, x, y):
 		gotChest = bob.gotChest
 		
 
-
-		tile_temp_coor = level_one.render_level(tiles)
-
 		bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
 		bob.draw(screen)
 
 		if temp_coor[2] == True:
 			return (True,temp_coor[3]) #next level and if you got chest or not
 			done = True
+		elif temp_coor[3] == True:
+			pass
 		pygame.display.flip()	
 
 	
@@ -351,19 +352,19 @@ my_present = present(presents, presents_s,True,0,0,0)
 title_screen()
 while True:
 
-#do all seperate screens no if statement as much???
-	if game(one,50,50)[0] == True:
-		if game(two,50,50)[0] == True:
-			if game(thr,150,250)[0] == True:
-				if game(fou,350,100)[0] == True:
-					if game(fiv,650,100)[0] == True:
-						if game(six,550,450)[0] == True:
+#do all seperate screens no if statement as much??? #####SHOW PRESENT IN THE GAME LOOP!!!!!
+	if game(one,50,50,1)[0] == True:
+		if game(two,50,50,2)[0] == True:
+			if game(thr,150,250,3)[0] == True:
+				if game(fou,350,100,4)[0] == True:
+					if game(fiv,650,100,5)[0] == True:
+						if game(six,550,450,6)[0] == True:
 							continue
-	if game(one,50,50)[1] == True:
+	if game(one,50,50,1)[1] == True:
 		print("yes")
-		if game(two,50,50)[1] == True:
-			if game(thr,150,250)[1] == True:
-				if game(fou,350,100)[1] == True:
-					if game(fiv,650,100)[1] == True:
-						if game(six,550,450)[1] == True:
+		if game(two,50,50,2)[1] == True:
+			if game(thr,150,250,3)[1] == True:
+				if game(fou,350,100,4)[1] == True:
+					if game(fiv,650,100,5)[1] == True:
+						if game(six,550,450,6)[1] == True:
 							quit()
