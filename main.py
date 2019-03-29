@@ -268,7 +268,7 @@ present5_s = pygame.transform.scale(present5, (50,50))
 present6 = pygame.image.load(getPath("assets/present6.png")) #summon
 present6_s = pygame.transform.scale(present6, (50,50))
 
-title = pygame.image.load(getPath("assets/title.png"))
+title = pygame.image.load(getPath("assets//unused/present1.png"))
 
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 presents = (present1,present2,present3,present4,present5,present6)
@@ -277,7 +277,7 @@ presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 
 def title_screen(presentList):
 	done = False
-	myPresentBar = bar(1,presentList)
+	presents_small = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 	while not done:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -285,10 +285,16 @@ def title_screen(presentList):
 			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
 				if event.key == pygame.K_SPACE:
 					done = True
-		
+		# myPresentBar = bar(1,presentList,0,0)
+		# myPresentBar.show()
 		screen.blit(title, (0,0))
-		myPresentBar.show()
+		# count = 0
+		# for x in presentList:
+		# 	screen.blit(x, (count,0))
+		# 	count+=50
 
+		john = bar(presents_small)
+		john.draw()
 		pygame.display.flip()	
 
 
@@ -303,7 +309,7 @@ class game_class():
 		
 	def game(self):
 		done = False
-
+		presents_small = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 		#level
 		level_one = level(self.level_matrix, tiles,0,0) #level
 
@@ -318,8 +324,7 @@ class game_class():
 
 		my_present = present(True, presents_s,presents,int(self.number)-1,(int(self.number)-1)*50,0)
 
-		myPresentBar = bar(1,self.present_list)
-		myPresentBar.show()
+		john = bar(presents_small)
 		while not done:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -343,7 +348,8 @@ class game_class():
 
 	#my_present.is_full_size
 
-
+		
+			john.draw()
 
 			bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
 			bob.draw(screen)
@@ -356,16 +362,47 @@ class game_class():
 			pygame.display.flip()	
 
 	
+# class bar():
+# 	"""docstring for bar"""
+# 	def __init__(self, numberOfImages,image_list, x,y):
+# 		self.numberOfImages = numberOfImages
+# 		self.image_list = image_list
+# 		self.x = x
+# 		self.y = y 
+# 	def show(self):
+
+
+
+# 		# self.numberOfImages = 1
+# 		# for x in self.image_list:#[0:(int(self.numberOfImages))]
+# 		# 	screen.blit(x,((int(self.numberOfImages)-1)*50+250,0))
+# 		# 	self.numberOfImages +=1
+# 		# 	print(self.image_list)
+# 		# 	pygame.display.flip()
+# 		# self.x = 0
+# 		# self.y = 0
+
+
+
+# 		for present in self.image_list:
+# 			self.draw(self.x, self.y, present)
+# 			self.x+=50
+# 		pygame.display.flip()
+# 	def draw(self, x, y,present):
+# 		screen.blit(present, (x,y))
+# 		pygame.display.flip()
+
+
 class bar():
 	"""docstring for bar"""
-	def __init__(self, numberOfImages,image_list):
-		self.numberOfImages = numberOfImages
-		self.image_list = image_list
-	def show(self):
-		for x in self.image_list:#[0:(int(self.numberOfImages))]
-			screen.blit(x,((int(self.numberOfImages)-1)*50+250,0))
-			self.numberOfImages +=1
-			print(self.image_list)
+	def __init__(self,presentList):
+		self.presentList = presentList
+	def draw(self):
+		count = 0
+		for x in self.presentList:
+			screen.blit(x, (count,0))
+			count+=50
+
 
 
 
