@@ -298,10 +298,10 @@ def title_screen():
 
 class game_class():
 	"""docstring for game_class"""
-	def __init__(self, level_matrix, x, y, number, chest_checklist):
+	def __init__(self, level_matrix, player_location, number, chest_checklist):
 		self.level_matrix = level_matrix
-		self.x = x
-		self.y = y
+		self.x = player_location[0]
+		self.y = player_location[1]
 		self.number = number
 		self.present_list = presents_s
 		#-----------------------------------------------------------------
@@ -359,6 +359,7 @@ class game_class():
 			if temp_coor[3] == True:
 				self.image = my_present.show()[0]
 				self.chest_checklist[self.number-1] = True
+				print('Chest opened!!!!!!!!! number is {}'.format(self.number))
 				# return (False,chest_get_checklist)
 				#level in which present was got
 				if temp_coor[2] == True:
@@ -406,21 +407,29 @@ class bar():
 
 def main_loop():
 	chest_checklist = [False,False,False,False,False,False]
-	game1 = game_class(one,50,50,1)
-	game2 = game_class(two,50,50,2)
-	game3 = game_class(thr,150,250,3)
-	game4 = game_class(fou,350,100,4)
-	game5 = game_class(fiv,650,100,5)
-	game6 = game_class(six,550,450,6)
+	player_location = ((50,50),(50,50),(150,250),(350,100),(650,100),(550,450))
+	level_list = (one, two, thr, fou, fiv, six)
+
+	# game1 = game_class(one,50,50,1)
+	# game2 = game_class(two,50,50,2)
+	# game3 = game_class(thr,150,250,3)
+	# game4 = game_class(fou,350,100,4)
+	# game5 = game_class(fiv,650,100,5)
+	# game6 = game_class(six,550,450,6)
 
 	chest_item_list=[]
-	level_list = [game1,game2,game3,game4,game5,game6]
+	#level_list = [game1,game2,game3,game4,game5,game6]
 
 	# title_screen()
 
 	while True:
+		i = 0
 		for level in level_list:
-			if level.game()[0] == True:
+			game = game_class(level, player_location[i], i+1, chest_checklist)
+			chest_checklist = game.chest_checklist
+			i += 1
+			print('new chest_checklist {}'.format(chest_checklist))
+			if game.game()[0] == True:
 				pass
 
 
