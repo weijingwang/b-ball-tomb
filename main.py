@@ -298,7 +298,7 @@ def title_screen():
 
 class game_class():
 	"""docstring for game_class"""
-	def __init__(self, level_matrix,x,y,number):
+	def __init__(self, level_matrix, x, y, number, chest_checklist):
 		self.level_matrix = level_matrix
 		self.x = x
 		self.y = y
@@ -306,7 +306,7 @@ class game_class():
 		self.present_list = presents_s
 		#-----------------------------------------------------------------
 		#-----------------------------------------------------------------
-		self.chest_checklist = [False,False,False,False,False,False]
+		self.chest_checklist = chest_checklist
 		#-----------------------------------------------------------------
 		#-----------------------------------------------------------------
 	def game(self):
@@ -341,7 +341,7 @@ class game_class():
 						print("asgdfsghrete")
 						my_present.is_full_size = False
 
-
+			temp_chest_check = self.chest_checklist
 			tileBox = level_one.render_level(tiles)
 			
 			temp_coor = bob.move()
@@ -362,10 +362,10 @@ class game_class():
 				# return (False,chest_get_checklist)
 				#level in which present was got
 				if temp_coor[2] == True:
-					return (True,self.chest_checklist) #next level and if you got chest or not
+					return (True,temp_chest_check) #next level and if you got chest or not
 					done = True
 			elif temp_coor[2] == True:
-				return (True,self.chest_checklist) #next level and if you got chest or not
+				return (True,temp_chest_check) #next level and if you got chest or not
 				done = True
 			
 
@@ -374,9 +374,9 @@ class game_class():
 
 			john.draw()
 
-			print(self.chest_checklist)
+			print(temp_chest_check)
 
-			pygame.display.flip()	
+			pygame.display.flip()
 
 
 class bar():
@@ -404,8 +404,8 @@ class bar():
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-def main_loop(mlist):
-
+def main_loop():
+	chest_checklist = [False,False,False,False,False,False]
 	game1 = game_class(one,50,50,1)
 	game2 = game_class(two,50,50,2)
 	game3 = game_class(thr,150,250,3)
@@ -413,17 +413,16 @@ def main_loop(mlist):
 	game5 = game_class(fiv,650,100,5)
 	game6 = game_class(six,550,450,6)
 
-
 	chest_item_list=[]
 	level_list = [game1,game2,game3,game4,game5,game6]
 
-
 	# title_screen()
 
-
 	while True:
-		for game in level_list:
-			if game.game()[0] == True:
+		for level in level_list:
+			if level.game()[0] == True:
 				pass
-main_loop(presents_s)
+
+
+main_loop()
 
