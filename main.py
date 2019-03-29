@@ -80,9 +80,9 @@ class player():
 
 class present(): #stuff in the chest and when you open it, you get this and it will show in a bar
 	"""docstring for present"""
-	def __init__(self, full_size, small_size,size_is_normal,my_id,x,y):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
-# SIZE if fullscreen, press enter to make gone...
-		self.full_size = full_size
+	def __init__(self, is_full_size, small_size,size_is_normal,my_id,x,y):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
+	# SIZE if fullscreen, press enter to make gone...
+		self.is_full_size = is_full_size
 		self.small_size = small_size
 		self.size_is_normal = size_is_normal
 		self.my_id = my_id
@@ -91,17 +91,12 @@ class present(): #stuff in the chest and when you open it, you get this and it w
 		
 
 	def show(self):
-		done = False
-		while not done:
-			for event in pygame.event.get():
-				if event.type == pygame.KEYDOWN:
-					if event.key == pygame.K_RETURN:
-						self.size_is_normal = False
-			if self.size_is_normal == True:
-				screen.blit(self.full_size[self.my_id], (self.x,self.y))
-			else:
-				screen.blit(self.small_size[self.my_id], (self.x,self.y))
 
+		if self.is_full_size == True:
+			screen.blit(self.size_is_normal[self.my_id], (0,0))
+		else:
+			screen.blit(self.small_size[self.my_id], (self.x,self.y))
+		return(self.small_size[self.my_id],self.x,self.y)
 
 		
 
@@ -234,14 +229,14 @@ fiv =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 
 six =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
-		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
-		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
-		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,4,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
 		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
 
@@ -280,9 +275,9 @@ presents = (present1,present2,present3,present4,present5,present6)
 presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 
 
-def title_screen():
+def title_screen(presentList):
 	done = False
-
+	myPresentBar = bar(1,presentList)
 	while not done:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -290,81 +285,111 @@ def title_screen():
 			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
 				if event.key == pygame.K_SPACE:
 					done = True
-
+		
 		screen.blit(title, (0,0))
+		myPresentBar.show()
 
 		pygame.display.flip()	
 
 
+class game_class():
+	"""docstring for game_class"""
+	def __init__(self, level_matrix,x,y,number):
+		self.level_matrix = level_matrix
+		self.x = x
+		self.y = y
+		self.number = number
+		self.present_list = presents_s
+		
+	def game(self):
+		done = False
 
-def game(level_matrix, x, y,number):
-	done = False
-
-	#level
-	level_one = level(level_matrix, tiles,0,0) #level
+		#level
+		level_one = level(self.level_matrix, tiles,0,0) #level
 
 
 
-	x_collide = False
-	y_collide = False
-	tileBox = level_one.render_level(tiles)
-
-	bob=player(myimage,x,y,tileBox,tileBox, False, False) #player
-	bob.draw(screen)
-
-	my_present = present(True, presents_s,presents,int(number)-1,0,0)
-
-	while not done:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				quit()
-			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
-				if event.key == pygame.K_r:
-					bob.x = 50
-					bob.y = 50
-
+		x_collide = False
+		y_collide = False
 		tileBox = level_one.render_level(tiles)
 
-		temp_coor = bob.move()
-		playerBox = bob.draw(screen)
-		next_level = bob.next_level
-		gotChest = bob.gotChest
-		
-
-		bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
+		bob=player(myimage,self.x,self.y,tileBox,tileBox, False, False) #player
 		bob.draw(screen)
 
-		if temp_coor[2] == True:
-			return (True,temp_coor[3]) #next level and if you got chest or not
-			done = True
-		elif temp_coor[3] == True:
-			pass
-		pygame.display.flip()	
+		my_present = present(True, presents_s,presents,int(self.number)-1,(int(self.number)-1)*50,0)
+
+		myPresentBar = bar(1,self.present_list)
+		myPresentBar.show()
+		while not done:
+			for event in pygame.event.get():
+				if event.type == pygame.QUIT:
+					quit()
+				elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
+					if event.key == pygame.K_r:
+						bob.x = self.x
+						bob.y = self.y
+					elif event.key == pygame.K_RETURN and temp_coor[3] == True:
+						print("asgdfsghrete")
+						my_present.is_full_size = False
+
+
+			tileBox = level_one.render_level(tiles)
+			
+			temp_coor = bob.move()
+			playerBox = bob.draw(screen)
+			next_level = bob.next_level
+			gotChest = bob.gotChest
+			# print (temp_coor[3])
+
+	#my_present.is_full_size
+
+
+
+			bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
+			bob.draw(screen)
+
+			if temp_coor[2] == True:
+				return (True,temp_coor[3]) #next level and if you got chest or not
+				done = True
+			elif temp_coor[3] == True:
+				self.image = my_present.show()[0]
+			pygame.display.flip()	
 
 	
-
+class bar():
+	"""docstring for bar"""
+	def __init__(self, numberOfImages,image_list):
+		self.numberOfImages = numberOfImages
+		self.image_list = image_list
+	def show(self):
+		for x in self.image_list:#[0:(int(self.numberOfImages))]
+			screen.blit(x,((int(self.numberOfImages)-1)*50+250,0))
+			self.numberOfImages +=1
+			print(self.image_list)
 
 
 
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-my_present = present(presents, presents_s,True,0,0,0)
-title_screen()
-while True:
+def main_loop(mlist):
+	game1 = game_class(one,50,50,1)
+	game2 = game_class(two,50,50,2)
+	game3 = game_class(thr,150,250,3)
+	game4 = game_class(fou,350,100,4)
+	game5 = game_class(fiv,650,100,5)
+	game6 = game_class(six,550,450,6)
 
-#do all seperate screens no if statement as much??? #####SHOW PRESENT IN THE GAME LOOP!!!!!
-	if game(one,50,50,1)[0] == True:
-		if game(two,50,50,2)[0] == True:
-			if game(thr,150,250,3)[0] == True:
-				if game(fou,350,100,4)[0] == True:
-					if game(fiv,650,100,5)[0] == True:
-						if game(six,550,450,6)[0] == True:
-							continue
-	if game(one,50,50,1)[1] == True:
-		print("yes")
-		if game(two,50,50,2)[1] == True:
-			if game(thr,150,250,3)[1] == True:
-				if game(fou,350,100,4)[1] == True:
-					if game(fiv,650,100,5)[1] == True:
-						if game(six,550,450,6)[1] == True:
-							quit()
+
+	chest_item_list=[]
+	level_list = [game1,game2,game3,game4,game5,game6]
+
+
+	title_screen(mlist)
+
+
+	while True:
+		for game in level_list:
+			if game.game()[1] == True:
+				pass
+main_loop(presents_s)
+
