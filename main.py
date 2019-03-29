@@ -95,7 +95,8 @@ class present(): #stuff in the chest and when you open it, you get this and it w
 		if self.is_full_size == True:
 			screen.blit(self.size_is_normal[self.my_id], (0,0))
 		else:
-			screen.blit(self.small_size[self.my_id], (self.x,self.y))
+			pass
+			# screen.blit(self.small_size[self.my_id], (self.x,self.y))
 		return(self.small_size[self.my_id],self.x,self.y)
 
 		
@@ -275,7 +276,7 @@ presents = (present1,present2,present3,present4,present5,present6)
 presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 
 
-def title_screen(presentList):
+def title_screen():
 	done = False
 	while not done:
 		for event in pygame.event.get():
@@ -303,7 +304,11 @@ class game_class():
 		self.y = y
 		self.number = number
 		self.present_list = presents_s
-		
+		#-----------------------------------------------------------------
+		#-----------------------------------------------------------------
+		self.chest_checklist = [False,False,False,False,False,False]
+		#-----------------------------------------------------------------
+		#-----------------------------------------------------------------
 	def game(self):
 		done = False
 		presents_small = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
@@ -321,7 +326,9 @@ class game_class():
 
 		my_present = present(True, presents_s,presents,int(self.number)-1,(int(self.number)-1)*50,0)
 
-		john = bar(presents_small,self.number)
+		john = bar(presents_small,self.number,False,self.chest_checklist)
+
+
 		while not done:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -342,63 +349,50 @@ class game_class():
 			next_level = bob.next_level
 			gotChest = bob.gotChest
 			# print (temp_coor[3])
-
+			john = bar(presents_small,self.number,False,self.chest_checklist)
 	#my_present.is_full_size
 
-		
-			john.draw()
 
 			bob=player(myimage,temp_coor[0],temp_coor[1],tileBox,tileBox, next_level,gotChest)
 			bob.draw(screen)
 
-			if temp_coor[2] == True:
-				return (True,temp_coor[3]) #next level and if you got chest or not
-				done = True
-			elif temp_coor[3] == True:
+			if temp_coor[3] == True:
 				self.image = my_present.show()[0]
+				self.chest_checklist[self.number-1] = True
+				# return (False,chest_get_checklist)
+				#level in which present was got
+				if temp_coor[2] == True:
+					return (True,self.chest_checklist) #next level and if you got chest or not
+					done = True
+			elif temp_coor[2] == True:
+				return (True,self.chest_checklist) #next level and if you got chest or not
+				done = True
+			
+
+
+			#bar "code" hahahahahahahahaha-----------------------
+
+			john.draw()
+
+
+
 			pygame.display.flip()	
-
-	
-# class bar():
-# 	"""docstring for bar"""
-# 	def __init__(self, numberOfImages,image_list, x,y):
-# 		self.numberOfImages = numberOfImages
-# 		self.image_list = image_list
-# 		self.x = x
-# 		self.y = y 
-# 	def show(self):
-
-
-
-# 		# self.numberOfImages = 1
-# 		# for x in self.image_list:#[0:(int(self.numberOfImages))]
-# 		# 	screen.blit(x,((int(self.numberOfImages)-1)*50+250,0))
-# 		# 	self.numberOfImages +=1
-# 		# 	print(self.image_list)
-# 		# 	pygame.display.flip()
-# 		# self.x = 0
-# 		# self.y = 0
-
-
-
-# 		for present in self.image_list:
-# 			self.draw(self.x, self.y, present)
-# 			self.x+=50
-# 		pygame.display.flip()
-# 	def draw(self, x, y,present):
-# 		screen.blit(present, (x,y))
-# 		pygame.display.flip()
 
 
 class bar():
 	"""docstring for bar"""
-	def __init__(self,presentList,maxi):
+	def __init__(self,presentList,maxi,new_gotChest,alreadyGot):
 		self.presentList = presentList
 		self.maxi = maxi
+		self.new_gotChest = new_gotChest
+		self.alreadyGot = alreadyGot
 	def draw(self):
 		count = 0
 		for x in self.presentList[:self.maxi]:
-			screen.blit(x, (count+250,0))
+			if self.new_gotChest == True:
+				screen.blit(x, (count+250,0))
+			else:
+				pass
 			count+=50
 
 
@@ -407,6 +401,7 @@ class bar():
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def main_loop(mlist):
+
 	game1 = game_class(one,50,50,1)
 	game2 = game_class(two,50,50,2)
 	game3 = game_class(thr,150,250,3)
@@ -419,12 +414,12 @@ def main_loop(mlist):
 	level_list = [game1,game2,game3,game4,game5,game6]
 
 
-	title_screen(mlist)
+	# title_screen()
 
 
 	while True:
 		for game in level_list:
-			if game.game()[1] == True:
+			if game.game()[0] == True:
 				pass
 main_loop(presents_s)
 
