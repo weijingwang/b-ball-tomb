@@ -268,7 +268,7 @@ present5_s = pygame.transform.scale(present5, (50,50))
 present6 = pygame.image.load(getPath("assets/present6.png")) #summon
 present6_s = pygame.transform.scale(present6, (50,50))
 
-title = pygame.image.load(getPath("assets//unused/present1.png"))
+title = pygame.image.load(getPath("assets/title.png"))
 
 tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
 presents = (present1,present2,present3,present4,present5,present6)
@@ -277,7 +277,6 @@ presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 
 def title_screen(presentList):
 	done = False
-	presents_small = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 	while not done:
 		for event in pygame.event.get():
 			if event.type == pygame.QUIT:
@@ -293,8 +292,6 @@ def title_screen(presentList):
 		# 	screen.blit(x, (count,0))
 		# 	count+=50
 
-		john = bar(presents_small)
-		john.draw()
 		pygame.display.flip()	
 
 
@@ -324,7 +321,7 @@ class game_class():
 
 		my_present = present(True, presents_s,presents,int(self.number)-1,(int(self.number)-1)*50,0)
 
-		john = bar(presents_small)
+		john = bar(presents_small,self.number)
 		while not done:
 			for event in pygame.event.get():
 				if event.type == pygame.QUIT:
@@ -395,12 +392,13 @@ class game_class():
 
 class bar():
 	"""docstring for bar"""
-	def __init__(self,presentList):
+	def __init__(self,presentList,maxi):
 		self.presentList = presentList
+		self.maxi = maxi
 	def draw(self):
 		count = 0
-		for x in self.presentList:
-			screen.blit(x, (count,0))
+		for x in self.presentList[:self.maxi]:
+			screen.blit(x, (count+250,0))
 			count+=50
 
 
