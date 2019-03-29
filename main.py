@@ -374,7 +374,7 @@ class game_class():
 
 			john.draw()
 
-
+			print(self.chest_checklist)
 
 			pygame.display.flip()	
 
@@ -389,11 +389,15 @@ class bar():
 	def draw(self):
 		count = 0
 		for x in self.presentList[:self.maxi]:
-			if self.new_gotChest == True:
-				screen.blit(x, (count+250,0))
-			else:
-				pass
-			count+=50
+			for status in self.alreadyGot:
+				if status == True:
+					screen.blit(x, ((self.alreadyGot.index(status)*50)+250,0))
+				else:
+					if self.new_gotChest == True:
+						screen.blit(x, (count+250,0))
+					else:
+						pass
+					count+=50
 
 
 
