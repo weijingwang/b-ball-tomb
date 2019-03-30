@@ -16,6 +16,6 @@ requirements to run
 do
 `python3 main.py` to run
 
-*PS if you want to skip the boss fight, press ENTER*
+# `***PS if you want to skip the boss fight, press ENTER***`
 
 
