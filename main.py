@@ -89,9 +89,10 @@ class present(): #stuff in the chest and when you open it, you get this and it w
 		
 
 	def show(self):
-
+		myEffect = pygame.mixer.Sound(getPath("assets/C.ogg"))
 		if self.is_full_size == True:
 			screen.blit(self.size_is_normal[self.my_id], (0,0))
+			myEffect.play()
 		else:
 			pass
 			# screen.blit(self.small_size[self.my_id], (self.x,self.y))
