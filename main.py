@@ -277,7 +277,7 @@ def title_screen(image):
 
 		pygame.display.flip()
 
-def final_boss_game(boss_image):
+def final_boss_game(boss_image,level):
 	bossX = 0
 	bossY = 0
 	done = False
@@ -309,6 +309,7 @@ def final_boss_game(boss_image):
 
 		screen.blit(boss_image, (bossX,bossY))
 		messageText(str(counter),20,40,30,screen,255,255,255)
+		messageText("b baller man has {} lives left".format(str(int(7-level))),500,40,30,screen,255,255,255)
 		messageText("6 pressed {} times...".format(str(count6)),550,500,30,screen,255,255,255)
 		# count = 0
 		# for x in presentList:
@@ -462,6 +463,7 @@ presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
 #!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 def main_loop():
+	pygame.mixer.music.load(getPath("assets/bb.mp3")) 
 	chest_checklist = [False,False,False,False,False,False]
 	player_location = ((50,50),(50,50),(150,250),(350,100),(650,100),(550,450))
 	level_list = (one, two, thr, fou, fiv, six)
@@ -475,7 +477,6 @@ def main_loop():
 
 	chest_item_list=[]
 	#level_list = [game1,game2,game3,game4,game5,game6]
-
 	title_screen(title)
 	title_screen(scene1)
 	while True:
@@ -487,12 +488,18 @@ def main_loop():
 			print('new chest_checklist {}'.format(chest_checklist))
 			game.game()
 		if chest_checklist == [True,True,True,True,True,True]:
+			pygame.mixer.music.play(-1,0.0)
 			title_screen(scene2)
 			title_screen(scene3)
 			title_screen(scene4)
 			title_screen(scene5)
 			fadetoWhite(screen)
-			final_boss_game(boss)
+			final_boss_game(boss,1)
+			final_boss_game(boss,2)
+			final_boss_game(boss,3)
+			final_boss_game(boss,4)
+			final_boss_game(boss,5)
+			final_boss_game(boss,6)
 			title_screen(scene6)
 			quit()
 
