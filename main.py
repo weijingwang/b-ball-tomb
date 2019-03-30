@@ -301,6 +301,9 @@ def final_boss_game(boss_image,level):
 				if event.key == pygame.K_6:
 					count6+=1
 					print(count6)
+				elif event.key == pygame.K_RETURN:
+					count6+=11
+					print(count6)
 			elif event.type == pygame.USEREVENT:
 				counter -= 1
 				text = str(counter).rjust(3) if counter > 0 else 'boom!'
@@ -312,11 +315,12 @@ def final_boss_game(boss_image,level):
 		messageText(str(counter),20,40,30,screen,255,255,255)
 		messageText("b baller man has {} lives left".format(str(int(7-level))),500,40,30,screen,255,255,255)
 		messageText("6 pressed {} times...".format(str(count6)),550,500,30,screen,255,255,255)
+		messageText("press ENTER for powerup...",300,550,30,screen,255,255,255)
 		# count = 0
 		# for x in presentList:
 		# 	screen.blit(x, (count,0))
 		# 	count+=50
-		if count6 == 66:
+		if count6 >= 66:
 			print("you win")
 			done = True
 		pygame.display.flip()
