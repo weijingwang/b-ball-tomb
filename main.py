@@ -76,8 +76,6 @@ class player():
 	
 		return(self.x, self.y, self.next_level, self.gotChest)
 
-
-
 class present(): #stuff in the chest and when you open it, you get this and it will show in a bar
 	"""docstring for present"""
 	def __init__(self, is_full_size, small_size,size_is_normal,my_id,x,y):#id is number and if certain id, x and y set. SIZE is boolean if it is full screen or just icon
@@ -98,8 +96,6 @@ class present(): #stuff in the chest and when you open it, you get this and it w
 			pass
 			# screen.blit(self.small_size[self.my_id], (self.x,self.y))
 		return(self.small_size[self.my_id],self.x,self.y)
-
-		
 
 class level():
 	"""docstring for level"""
@@ -154,147 +150,6 @@ class level():
 			# print("good")
 			
 		return tileRect_list ,endTile, chest
-
-
-
-"""This is where my program starts """
-import pygame
-import os
-pygame.init()
-screen = pygame.display.set_mode((800, 600))
-
-one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,1,1,1,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,3,1,0,0,0,3,0,0,0,0,0,3],
-		[1,0,0,0,0,0,0,0,0,0,3,3,0,0,3,3],
-		[1,0,0,0,0,0,0,0,0,0,3,0,3,0,3,2],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3]]
-
-two =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,3,0,0,0,4,0,0,1,1,0,0,0,1,1,1],
-		[1,0,0,0,0,0,3,3,3,3,3,0,0,1,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,1,1,1,3,1],
-		[1,1,1,0,0,1,1,1,1,1,1,1,3,3,0,1],
-		[1,0,1,0,0,0,0,0,0,0,0,0,3,2,0,1],
-		[1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1],
-		[1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
-		[1,0,0,0,0,0,3,3,3,0,0,0,0,0,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-
-thr =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,3,0,0,1,3,0,0,0,1],
-		[1,0,0,3,0,0,3,4,3,0,1,3,0,0,0,1],
-		[1,0,0,0,0,0,0,3,0,0,1,3,0,2,0,1],
-		[1,0,0,0,0,0,0,0,0,0,1,3,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,1,1,1,1,0,0,0,0,1,0,1,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-
-fou =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
-		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
-		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
-		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
-		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
-		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
-		[1,0,0,0,1,0,3,0,0,3,0,1,0,3,0,1],
-		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
-		[1,0,0,0,1,0,3,4,0,3,0,1,0,2,0,1],
-		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-
-fiv =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1],
-		[1,0,4,0,0,0,0,0,0,1,1,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1],
-		[1,0,0,0,0,0,1,1,1,0,0,0,0,0,3,1],
-		[1,0,0,0,0,0,1,0,0,0,0,0,0,3,3,1],
-		[1,0,0,0,0,0,3,0,0,0,0,0,3,3,0,1],
-		[1,0,0,0,0,0,3,0,0,0,0,3,3,0,0,1],
-		[1,0,0,0,0,0,1,1,1,3,3,3,0,0,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
-		[1,0,0,0,0,0,0,0,0,0,2,0,0,0,1,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-
-six =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,4,0,1],
-		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
-		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
-		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
-		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
-		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
-
-
-#image
-
-def getPath(path):
-	the_path = os.path.abspath(path)
-	return the_path
-
-#player, tile
-myimage = pygame.image.load(getPath("assets/b-ball.png"))
-door_tile = pygame.image.load(getPath("assets/tile.png")) #door
-tile_tile =pygame.image.load(getPath("assets/tile1.png")) #tile
-wall_tile =pygame.image.load(getPath("assets/tile2.png")) #wall	
-light_tile =pygame.image.load(getPath("assets/tile3.png")) #light	
-baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light	
-#presents
-present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
-present1_s = pygame.transform.scale(present1, (50,50))
-present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
-present2_s = pygame.transform.scale(present2, (50,50))
-present3 = pygame.image.load(getPath("assets/present3.png")) # b-ball bone
-present3_s = pygame.transform.scale(present3, (50,50))
-present4 = pygame.image.load(getPath("assets/present4.png")) # slam dunk REDO?
-present4_s = pygame.transform.scale(present4, (50,50))
-present5 = pygame.image.load(getPath("assets/present5.png")) # JOIN THE PACK
-present5_s = pygame.transform.scale(present5, (50,50))
-present6 = pygame.image.load(getPath("assets/present6.png")) #summon
-present6_s = pygame.transform.scale(present6, (50,50))
-
-title = pygame.image.load(getPath("assets/title.png"))
-
-tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
-presents = (present1,present2,present3,present4,present5,present6)
-presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
-
-
-def title_screen():
-	done = False
-	while not done:
-		for event in pygame.event.get():
-			if event.type == pygame.QUIT:
-				done = True
-			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
-				if event.key == pygame.K_SPACE:
-					done = True
-		# myPresentBar = bar(1,presentList,0,0)
-		# myPresentBar.show()
-		screen.blit(title, (0,0))
-		# count = 0
-		# for x in presentList:
-		# 	screen.blit(x, (count,0))
-		# 	count+=50
-
-		pygame.display.flip()	
-
 
 class game_class():
 	"""docstring for game_class"""
@@ -379,7 +234,6 @@ class game_class():
 
 			pygame.display.flip()
 
-
 class bar():
 	"""docstring for bar"""
 	def __init__(self,presentList,maxi,new_gotChest,alreadyGot):
@@ -399,6 +253,208 @@ class bar():
 					else:
 						pass
 					count+=50
+
+def getPath(path):
+	the_path = os.path.abspath(path)
+	return the_path
+
+def title_screen(image):
+	done = False
+	while not done:
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				quit()
+			elif event.type == pygame.KEYDOWN: #PRESS R IF STUCK OUT SIDE OR IN WALLS
+				if event.key == pygame.K_SPACE:
+					done = True
+		# myPresentBar = bar(1,presentList,0,0)
+		# myPresentBar.show()
+		screen.blit(image, (0,0))
+		# count = 0
+		# for x in presentList:
+		# 	screen.blit(x, (count,0))
+		# 	count+=50
+
+		pygame.display.flip()
+
+def final_boss_game(boss_image):
+	bossX = 0
+	bossY = 0
+	done = False
+	count6 = 0
+	print(count6)
+
+	#clock here--------------------------
+	clock = pygame.time.Clock()
+	counter, text = 66, '66'.rjust(3)
+	pygame.time.set_timer(pygame.USEREVENT, 1000)
+	#------------------------------------
+
+	while not done:
+		bossX = randrange(-1,1)
+		bossY = randrange(-1,1)
+		for event in pygame.event.get():
+			if event.type == pygame.QUIT:
+				quit()
+			elif event.type == pygame.KEYDOWN:
+				if event.key == pygame.K_6:
+					count6+=1
+					print(count6)
+			elif event.type == pygame.USEREVENT:
+				counter -= 1
+				text = str(counter).rjust(3) if counter > 0 else 'boom!'
+
+
+		#timer
+
+		screen.blit(boss_image, (bossX,bossY))
+		messageText(str(counter),20,40,30,screen,255,255,255)
+		messageText("6 pressed {} times...".format(str(count6)),550,500,30,screen,255,255,255)
+		# count = 0
+		# for x in presentList:
+		# 	screen.blit(x, (count,0))
+		# 	count+=50
+		if count6 == 66:
+			print("you win")
+			done = True
+		pygame.display.flip()
+		clock.tick(60)
+
+
+
+"""This is where my program starts """
+import pygame
+from fadetoWhite import *
+import os
+from random import randrange
+from displayText import *
+pygame.init()
+screen = pygame.display.set_mode((800, 600))
+
+one =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,4,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,1,1,1,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,3,1,0,0,0,3,0,0,0,0,0,3],
+		[1,0,0,0,0,0,0,0,0,0,3,3,0,0,3,3],
+		[1,0,0,0,0,0,0,0,0,0,3,0,3,0,3,2],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,3,3,3],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,3,3,3]]
+
+two =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,3,0,0,0,4,0,0,1,1,0,0,0,1,1,1],
+		[1,0,0,0,0,0,3,3,3,3,3,0,0,1,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,1,1,1,3,1],
+		[1,1,1,0,0,1,1,1,1,1,1,1,3,3,0,1],
+		[1,0,1,0,0,0,0,0,0,0,0,0,3,2,0,1],
+		[1,0,1,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,1,1,1,1,1,1,1,1,1,1,1,0,1,1],
+		[1,0,0,0,0,0,3,3,3,0,0,0,0,0,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+thr =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,0,0,1,3,0,0,0,1],
+		[1,0,0,3,0,0,3,4,3,0,1,3,0,0,0,1],
+		[1,0,0,0,0,0,0,3,0,0,1,3,0,2,0,1],
+		[1,0,0,0,0,0,0,0,0,0,1,3,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,1,1,1,1,0,0,0,0,1,0,1,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+fou =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,0,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,0,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,0,0,0,1,0,3,0,0,3,0,1,0,3,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,0,0,0,1,0,3,4,0,3,0,1,0,2,0,1],
+		[1,0,0,0,1,0,0,0,0,0,0,1,0,3,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+fiv =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,1,1,0,0,0,1],
+		[1,0,4,0,0,0,0,0,0,1,1,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,1,1,0,0,0,0,0,1],
+		[1,0,0,0,0,0,1,1,1,0,0,0,0,0,3,1],
+		[1,0,0,0,0,0,1,0,0,0,0,0,0,3,3,1],
+		[1,0,0,0,0,0,3,0,0,0,0,0,3,3,0,1],
+		[1,0,0,0,0,0,3,0,0,0,0,3,3,0,0,1],
+		[1,0,0,0,0,0,1,1,1,3,3,3,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,1,1],
+		[1,0,0,0,0,0,0,0,0,0,2,0,0,0,1,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+six =  [[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,4,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,3,0,2,2,0,3,0,0,0,0,1],
+		[1,0,0,0,0,0,3,0,0,3,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,3,3,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,0,0,0,0,0,0,0,0,0,0,0,0,0,0,1],
+		[1,1,1,1,1,1,1,1,1,1,1,1,1,1,1,1]]
+
+
+
+pygame.display.set_caption("B-Baller Tomb (Pyweek27) ...")
+
+#image
+
+#player, tile
+myimage = pygame.image.load(getPath("assets/b-ball.png"))
+door_tile = pygame.image.load(getPath("assets/tile.png")) #door
+tile_tile =pygame.image.load(getPath("assets/tile1.png")) #tile
+wall_tile =pygame.image.load(getPath("assets/tile2.png")) #wall	
+light_tile =pygame.image.load(getPath("assets/tile3.png")) #light	
+baller_tile =pygame.image.load(getPath("assets/tile4.png")) #light
+boss = pygame.image.load(getPath("assets/boss.png"))
+
+#presents
+present1 = pygame.image.load(getPath("assets/present1.png")) # old b-ball poster
+present1_s = pygame.transform.scale(present1, (50,50))
+present2 = pygame.image.load(getPath("assets/present2.png")) # b-ball rookie
+present2_s = pygame.transform.scale(present2, (50,50))
+present3 = pygame.image.load(getPath("assets/present3.png")) # b-ball bone
+present3_s = pygame.transform.scale(present3, (50,50))
+present4 = pygame.image.load(getPath("assets/present4.png")) # slam dunk REDO?
+present4_s = pygame.transform.scale(present4, (50,50))
+present5 = pygame.image.load(getPath("assets/present5.png")) # JOIN THE PACK
+present5_s = pygame.transform.scale(present5, (50,50))
+present6 = pygame.image.load(getPath("assets/present6.png")) #summon
+present6_s = pygame.transform.scale(present6, (50,50))
+
+#scene
+title = pygame.image.load(getPath("assets/title.png"))
+scene1 = pygame.image.load(getPath("assets/scene1.png"))
+scene2 = pygame.image.load(getPath("assets/scene2.png"))
+scene3 = pygame.image.load(getPath("assets/scene3.png"))
+scene4 = pygame.image.load(getPath("assets/scene4.png"))
+scene5 = pygame.image.load(getPath("assets/scene5.png"))
+scene6 = pygame.image.load(getPath("assets/scene6.png"))
+
+
+tiles = (tile_tile, wall_tile, door_tile, light_tile, baller_tile)
+presents = (present1,present2,present3,present4,present5,present6)
+presents_s = (present1_s,present2_s,present3_s,present4_s,present5_s,present6_s)
+
+
+	
+
 
 
 
@@ -420,8 +476,8 @@ def main_loop():
 	chest_item_list=[]
 	#level_list = [game1,game2,game3,game4,game5,game6]
 
-	# title_screen()
-
+	title_screen(title)
+	title_screen(scene1)
 	while True:
 		i = 0
 		for level in level_list:
@@ -429,8 +485,17 @@ def main_loop():
 			chest_checklist = game.chest_checklist
 			i += 1
 			print('new chest_checklist {}'.format(chest_checklist))
-			if game.game()[0] == True:
-				pass
+			game.game()
+		if chest_checklist == [True,True,True,True,True,True]:
+			title_screen(scene2)
+			title_screen(scene3)
+			title_screen(scene4)
+			title_screen(scene5)
+			fadetoWhite(screen)
+			final_boss_game(boss)
+			title_screen(scene6)
+			quit()
+
 
 
 main_loop()
