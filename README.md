@@ -13,4 +13,9 @@ code, art, music made by speedlimit35 (me)
 requirements to run
 `pygame, python3`
 
+do
+`python3 main.py` to run
+
+*PS if you want to skip the boss fight, press ENTER*
+
 
